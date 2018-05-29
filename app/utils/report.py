@@ -63,13 +63,22 @@ class Report:
             for kw in test.iter("kw"):
                 text = ""
                 image = ""
+                for msg in kw.iter("msg"):
+                    if "<a" in msg.text:
+                        img = re.findall('src="images/(.+)" width', msg.text)
+                        if len(img) != 0:
+                            image = img[0]
+                    else:
+                        text = text + msg.text + "<br>"
+                #print(text)
+                """    
                 msg = kw.find("msg")
                 if msg is not None:
                     text = kw.find("msg").text
 
                 if "<a" in text:
                     image = re.findall('src="images/(.+)" width', text)[0]
-
+                """
                 detail_data.append({
                     "status": kw.find("status").attrib["status"].lower(),
                     "keyword": kw.attrib["name"],

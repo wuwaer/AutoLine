@@ -24,7 +24,6 @@ mail = Mail()
 #moment = Moment()
 db = SQLAlchemy()
 #pagedown = PageDown()
-trigger = None
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 

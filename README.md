@@ -23,6 +23,13 @@
 
 AutoLine开源平台是一个开源自动化测试解决方案，基于RobotFramework进行二次开发，支持RobotFramework几乎所有的库。
 
+免安装版下载: [百度网盘下载](https://pan.baidu.com/s/1HyKykRRcXnu6K6V-8chDaQ)
+![网盘图片](app/static/images/demo/pan.baidu.png)
+
+用户简明教程： [简明教程](https://github.com/small99/AutoLine/blob/master/User%20Guide/User%20Guide/使用简明教程.md)
+
+安装部署教程： [安装教程](https://github.com/small99/AutoLine/blob/master/User%20Guide/User%20Guide/安装部署教程.md)
+
 ## 为什么要开发AutoLine
 
 1. 为中小企业提供一个好用的自动化测试解决方案
@@ -172,6 +179,8 @@ PhantomJS驱动：http://phantomjs.org/releases.html
 HtmlUnit驱动：https://sourceforge.net/projects/htmlunit/files/htmlunit/
 
 ## 截图
+调试模式
+![调试模式](./app/static/images/demo/debug_mode.png)
 
 产品管理
 ![产品管理](./app/static/images/demo/product.png)
@@ -180,13 +189,18 @@ HtmlUnit驱动：https://sourceforge.net/projects/htmlunit/files/htmlunit/
 ![项目管理](./app/static/images/demo/project.png)
 
 调度管理
-![调度管理](./app/static/images/demo/scheduler.png)
+![调度管理](./app/static/images/demo/scheduler_manage.png)
+
+
+运行日志
+![查看任务](./app/static/images/demo/run_logs.png)
+![查看任务](./app/static/images/demo/run_logs_detail.png)
 
 查看任务
 ![查看任务](./app/static/images/demo/task.png)
 
 测试报告
-![查看报告](./app/static/images/demo/report.png)
+![查看报告](./app/static/images/demo/run_logs_detail.png)
 
 关键字帮助文档
 ![帮助手册](./app/static/images/demo/help.png)

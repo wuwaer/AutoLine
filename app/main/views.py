@@ -11,13 +11,14 @@ Email: lymking@foxmail.com
 """
 
 import os
-
-from flask import render_template, send_file
+import platform
+import codecs
+from flask import render_template, send_file, current_app
 from flask_login import login_required, current_user, logout_user
 
 from . import main
 
-from ..utils.runner import run_process
+from ..utils.runner import run_process, debug_run
 from ..utils.report import Report
 
 @main.route('/', methods=['GET'])
@@ -76,12 +77,26 @@ def manage(category, id):
     return render_template('%s.html' % category, id=id)
 
 
-#@login_required
+@login_required
 @main.route('/test_run/<category>/<id>', methods=['GET'])
 def test_run(category, id):
-    status = run_process(id)
+
+    status = run_process(category, id)
 
     return status
+
+
+@main.route('/debug/<id>', methods=['GET'])
+def debug(id):
+    project_id, build_no = debug_run(id)
+    log_path = os.getcwd() + "/logs/%s/%s/debug.log" % (project_id, build_no)
+    logs = "还没捕获到调试信息^_^"
+    if os.path.exists(log_path):
+        f = codecs.open(log_path, "r", "utf-8")
+        logs = f.read()
+        f.close()
+
+    return render_template('debug.html', logs=logs)
 
 
 @login_required
@@ -90,6 +105,33 @@ def report(project_id, build_no):
     r = Report(project_id, build_no)
 
     return r.build_report()
+
+
+@login_required
+@main.route('/run_logs/<project_id>/<build_no>', methods=['GET'])
+def run_logs(project_id, build_no):
+    log_path = os.getcwd() + "/logs/%s/%s/logs.log" % (project_id, build_no)
+    log_path = log_path.replace("\\", "/")
+    logs = "还没捕获到日志信息^_^"
+    if os.path.exists(log_path):
+        if "Windows" in platform.platform():
+            f = codecs.open(log_path, "r", "cp936")
+        else:
+            f = codecs.open(log_path, "r", "utf-8")
+
+        logs = f.read()
+        #print(logs)
+        f.close()
+        """
+        app = current_app._get_current_object()
+        for r in app.config["RUNNERS"]:
+            p = r["runner"]
+            if p._process.returncode == 0:
+                print('Subprogram success')
+                app.config["RUNNERS"].remove(r)
+        """
+
+    return render_template('logs.html', logs=logs)
 
 @login_required
 @main.route('/detail/<project_id>/<build_no>', methods=['POST'])
@@ -104,5 +146,8 @@ def detail(project_id, build_no):
 def view_image(project_id, build_no, filename):
 
     img_path = os.getcwd() + "/logs/%s/%s/images/%s" % (project_id, build_no, filename)
+    img_path.replace("\\", "/")
+    if os.path.exists(img_path):
+        return send_file(img_path)
 
-    return send_file(img_path)
+    return "截图失败，木有图片!!!"

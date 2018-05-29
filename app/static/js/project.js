@@ -54,7 +54,7 @@ function edit_project(){
     console.log(row);
     if (row){
         $("#edit_project_fm input[name='id']").val(row["id"]);
-        //$("#edit_project_fm select#category").combobox('select', row["分类"]);
+        $("#edit_project_fm select#category").combobox('select', row["分类"]);
         $("#edit_project_fm select#product_id").combobox('select', row["product_id"]);
         $("#edit_project_fm input#name").textbox('setValue', row["名称"]);
         $("#edit_project_fm input#desc").textbox('setValue', row["描述"]);
@@ -70,7 +70,7 @@ function delete_project(){
     var row = $('#project_list').datagrid('getSelected');
     if (row){
         $("#del_project_fm input[name='id']").val(row["id"]);
-        //$("#edit_project_fm select#category").combobox('select', row["分类"]);
+        $("#edit_project_fm select#category").combobox('select', row["分类"]);
         $("#del_project_fm select#product_id").combobox('select', row["product_id"]);
         $("#del_project_fm input#name").textbox('setValue', row["名称"]);
         $("#del_project_fm input#desc").textbox('setValue', row["描述"]);
@@ -80,4 +80,9 @@ function delete_project(){
     else{
         show_msg("提示", "请选择要删除的项目");
     }
+}
+
+function run_project_manage(value, row, index){
+    console.log(row);
+    return "<a href=\"#\" class=\"easyui-linkbutton\" data-options=\"iconCls:'icon-task'\" onclick=\"parent.test_frame_run('{0}', '{1}');\">运行</a>".lym_format(row.id, row["分类"]);
 }
